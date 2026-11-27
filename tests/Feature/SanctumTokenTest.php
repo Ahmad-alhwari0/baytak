@@ -31,7 +31,7 @@ class SanctumTokenTest extends TestCase
 
     public function test_guest_cannot_access_protected_route(): void
     {
-        $this->getJson('/api/user')
+        $this->getJson('/api/v1/user')
             ->assertUnauthorized();
     }
 
@@ -44,7 +44,7 @@ class SanctumTokenTest extends TestCase
         )->plainTextToken;
 
         $this->withToken($token)
-            ->getJson('/api/user')
+            ->getJson('/api/v1/user')
             ->assertOk()
             ->assertJsonPath('id', $user->id)
             ->assertJsonMissingPath('password')
@@ -60,7 +60,7 @@ class SanctumTokenTest extends TestCase
         $token->accessToken->delete();
 
         $this->withToken($token->plainTextToken)
-            ->getJson('/api/user')
+            ->getJson('/api/v1/user')
             ->assertUnauthorized();
     }
 
@@ -75,7 +75,7 @@ class SanctumTokenTest extends TestCase
         )->plainTextToken;
 
         $this->withToken($token)
-            ->getJson('/api/user')
+            ->getJson('/api/v1/user')
             ->assertUnauthorized();
     }
 
@@ -90,7 +90,7 @@ class SanctumTokenTest extends TestCase
         $user->delete();
 
         $this->withToken($token)
-            ->getJson('/api/user')
+            ->getJson('/api/v1/user')
             ->assertUnauthorized();
     }
 }
