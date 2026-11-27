@@ -46,9 +46,11 @@ class SanctumTokenTest extends TestCase
         $this->withToken($token)
             ->getJson('/api/v1/user')
             ->assertOk()
-            ->assertJsonPath('id', $user->id)
-            ->assertJsonMissingPath('password')
-            ->assertJsonMissingPath('google_id');
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('message', 'User retrieved successfully.')
+            ->assertJsonPath('data.id', $user->id)
+            ->assertJsonMissingPath('data.password')
+            ->assertJsonMissingPath('data.google_id');
     }
 
     public function test_revoked_token_is_rejected(): void
