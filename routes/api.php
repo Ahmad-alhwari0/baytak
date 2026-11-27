@@ -1,14 +1,9 @@
 <?php
 
-use App\Support\ApiResponse;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return ApiResponse::success(
-            data: $request->user(),
-            message: 'User retrieved successfully.'
-        );
-    })->middleware('auth:sanctum');
+    Route::get('/user', [UserController::class, 'show'])
+        ->middleware('auth:sanctum');
 });
